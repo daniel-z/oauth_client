@@ -1,0 +1,9 @@
+<!-- app/views/sessions/callback.html.erb -->
+<h1>OAuth Callback Data</h1>
+<% if @data %>
+  <p>Access Token: <%= @data.credentials.token %></p>
+  <p>Refresh Token: <%= @data.credentials.refresh_token %></p>
+  <p>Expires at: <%= Time.at(@data.credentials.expires_at) %></p>
+<% else %>
+  <p>No data received from the OAuth provider.</p>
+<% end %>

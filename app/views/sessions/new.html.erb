@@ -1,0 +1,6 @@
+<!-- app/views/sessions/new.html.erb -->
+<h1>Welcome to OAuth App</h1>
+<p>Click the button below to authenticate using the OAuth provider.</p>
+<%= form_tag('/auth/initiate', method: :post) do %>
+  <%= submit_tag 'Authenticate with OAuth' %>
+<% end %>

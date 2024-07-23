@@ -1,8 +1,0 @@
-<h1>Setup OAuth Client</h1>
-<%= form_tag('/auth/rx') do %>
-  <label>Client ID:</label>
-  <%= text_field_tag :client_id %><br>
-  <label>Client Secret:</label>
-  <%= text_field_tag :client_secret %><br>
-  <%= submit_tag 'Start OAuth Flow' %>
-<% end %>
