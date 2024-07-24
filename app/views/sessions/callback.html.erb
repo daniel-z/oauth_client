@@ -1,9 +1,42 @@
 <!-- app/views/sessions/callback.html.erb -->
-<h1>OAuth Callback Data</h1>
-<% if @data %>
-  <p>Access Token: <%= @data.credentials.token %></p>
-  <p>Refresh Token: <%= @data.credentials.refresh_token %></p>
-  <p>Expires at: <%= Time.at(@data.credentials.expires_at) %></p>
-<% else %>
-  <p>No data received from the OAuth provider.</p>
-<% end %>
+<h1>OAuth Callback Information</h1>
+
+<section>
+  <h2>User Information</h2>
+  <% if @oauth_data.params['user'] %>
+    <ul>
+      <% @oauth_data.params['user'].each do |key, value| %>
+        <li><strong><%= key %>:</strong> <%= value %></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No user information available.</p>
+  <% end %>
+</section>
+
+<section>
+  <h2>Organizations</h2>
+  <% if @oauth_data.params['organizations'] %>
+    <% @oauth_data.params['organizations'].each do |organization| %>
+      <div class="organization">
+        <h3>Organization ID: <%= organization['id'] %></h3>
+        <ul>
+          <% organization.each do |key, value| %>
+            <li><strong><%= key %>:</strong> <%= value %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No organizations information available.</p>
+  <% end %>
+</section>
+
+<section>
+  <h2>Token Information</h2>
+  <ul>
+    <li><strong>Token:</strong> <%= @oauth_data.token %></li>
+    <li><strong>Expires In:</strong> <%= @oauth_data.expires_in %></li>
+    <li><strong>Refresh Token:</strong> <%= @oauth_data.refresh_token %></li>
+  </ul>
+</section>

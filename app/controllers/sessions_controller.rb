@@ -11,8 +11,9 @@ class SessionsController < ApplicationController
   end
 
   def callback
-    access_token = @client.auth_code.get_token(params[:code], redirect_uri: redirect_uri)
-    session[:access_token] = access_token.token
+    @oauth_data = @client.auth_code.get_token(params[:code], redirect_uri: redirect_uri)
+    session[:access_token] = @oauth_data.token
+    render :callback  # Ensure it renders the callback.html.erb view
   end
 
   def client_credentials
@@ -49,7 +50,7 @@ class SessionsController < ApplicationController
   end
 
   def redirect_uri
-    ENV['CALLBACK_URL']  # Directly use the environment variable
+    ENV['CALLBACK_URL']
   end
 
   def get_response(url)
