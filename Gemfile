@@ -51,6 +51,9 @@ gem "bootsnap", require: false
 gem 'omniauth'
 gem 'omniauth-oauth2'
 gem 'dotenv-rails', groups: [:development, :test]
+gem 'bootstrap', '~> 5.1.3'
+gem 'jquery-rails'
+gem 'popper_js', '~> 2.0'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

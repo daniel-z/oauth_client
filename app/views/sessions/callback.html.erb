@@ -1,42 +1,44 @@
 <!-- app/views/sessions/callback.html.erb -->
-<h1>OAuth Callback Information</h1>
+<div class="container">
+  <h1 class="mt-5">OAuth Callback Information</h1>
 
-<section>
-  <h2>User Information</h2>
-  <% if @oauth_data.params['user'] %>
-    <ul>
-      <% @oauth_data.params['user'].each do |key, value| %>
-        <li><strong><%= key %>:</strong> <%= value %></li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p>No user information available.</p>
-  <% end %>
-</section>
-
-<section>
-  <h2>Organizations</h2>
-  <% if @oauth_data.params['organizations'] %>
-    <% @oauth_data.params['organizations'].each do |organization| %>
-      <div class="organization">
-        <h3>Organization ID: <%= organization['id'] %></h3>
-        <ul>
-          <% organization.each do |key, value| %>
-            <li><strong><%= key %>:</strong> <%= value %></li>
-          <% end %>
-        </ul>
-      </div>
+  <section class="mt-4">
+    <h2>User Information</h2>
+    <% if @oauth_data.params['user'] %>
+      <ul class="list-group">
+        <% @oauth_data.params['user'].each do |key, value| %>
+          <li class="list-group-item"><strong><%= key %>:</strong> <%= value %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No user information available.</p>
     <% end %>
-  <% else %>
-    <p>No organizations information available.</p>
-  <% end %>
-</section>
+  </section>
 
-<section>
-  <h2>Token Information</h2>
-  <ul>
-    <li><strong>Token:</strong> <%= @oauth_data.token %></li>
-    <li><strong>Expires In:</strong> <%= @oauth_data.expires_in %></li>
-    <li><strong>Refresh Token:</strong> <%= @oauth_data.refresh_token %></li>
-  </ul>
-</section>
+  <section class="mt-4">
+    <h2>Organizations</h2>
+    <% if @oauth_data.params['organizations'] %>
+      <% @oauth_data.params['organizations'].each do |organization| %>
+        <div class="organization mt-3">
+          <h3>Organization ID: <%= organization['id'] %></h3>
+          <ul class="list-group">
+            <% organization.each do |key, value| %>
+              <li class="list-group-item"><strong><%= key %>:</strong> <%= value %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    <% else %>
+      <p>No organizations information available.</p>
+    <% end %>
+  </section>
+
+  <section class="mt-4">
+    <h2>Token Information</h2>
+    <ul class="list-group">
+      <li class="list-group-item"><strong>Token:</strong> <%= @oauth_data.token %></li>
+      <li class="list-group-item"><strong>Expires In:</strong> <%= @oauth_data.expires_in %></li>
+      <li class="list-group-item"><strong>Refresh Token:</strong> <%= @oauth_data.refresh_token %></li>
+    </ul>
+  </section>
+</div>
