@@ -18,16 +18,26 @@
   <section class="mt-4">
     <h2>Organizations</h2>
     <% if @oauth_data.params['organizations'] %>
-      <% @oauth_data.params['organizations'].each do |organization| %>
-        <div class="organization mt-3">
-          <h3>Organization ID: <%= organization['id'] %></h3>
-          <ul class="list-group">
-            <% organization.each do |key, value| %>
-              <li class="list-group-item"><strong><%= key %>:</strong> <%= value %></li>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-smaller-text" style="width: 100%;">
+          <thead>
+            <tr>
+              <% @oauth_data.params['organizations'].first.each_key do |key| %>
+                <th><%= key.humanize %></th>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <% @oauth_data.params['organizations'].each do |organization| %>
+              <tr>
+                <% organization.each_value do |value| %>
+                  <td><%= value %></td>
+                <% end %>
+              </tr>
             <% end %>
-          </ul>
-        </div>
-      <% end %>
+          </tbody>
+        </table>
+      </div>
     <% else %>
       <p>No organizations information available.</p>
     <% end %>
