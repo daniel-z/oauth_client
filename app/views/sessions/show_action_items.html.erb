@@ -1,15 +1,73 @@
 <!-- app/views/sessions/show_action_items.html.erb -->
 <div class="container">
-  <h1>Action Items</h1>
-  <% if @action_items %>
-    <ul class="list-group">
-      <% @action_items.each do |item| %>
-        <li class="list-group-item"><strong>ID:</strong> <%= item['id'] %></li>
-        <li class="list-group-item"><strong>Description:</strong> <%= item['description'] %></li>
-        <!-- Add other fields as necessary -->
-      <% end %>
-    </ul>
-  <% else %>
-    <p>No action items available.</p>
-  <% end %>
+  <h1 class="mt-5">Action Items</h1>
+  
+  <div style="width: 100%; overflow-x: auto;">
+    <table class="table table-striped table-bordered" style="width: 100%; font-size: 0.8rem;">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>UUID</th>
+          <th>RX</th>
+          <th>Action Performed</th>
+          <th>Action Performed (Human)</th>
+          <th>Next Action</th>
+          <th>Next Action (Human)</th>
+          <th>URL</th>
+          <th>Subject</th>
+          <th>Request Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Ignored At</th>
+          <th>Completed At</th>
+          <th>Snooze Until</th>
+          <th>Quote Group ID</th>
+          <th>Quoted Ware ID</th>
+          <th>Proposal ID</th>
+          <th>Purchase Order ID</th>
+          <th>Compliance Manifest ID</th>
+          <th>Multipage Form ID</th>
+          <th>Note ID</th>
+          <th>DocuSign Signer ID</th>
+          <th>Target</th>
+          <th>Approval ID</th>
+          <th>Created At</th>
+          <th>Performed By</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @action_items["action_items"].each do |item| %>
+          <tr>
+            <td><%= item["id"] %></td>
+            <td><%= item["uuid"] %></td>
+            <td><%= item["rx"] %></td>
+            <td><%= item["action_performed"] %></td>
+            <td><%= item["action_performed_human"] %></td>
+            <td><%= item["next_action"] %></td>
+            <td><%= item["next_action_human"] %></td>
+            <td><%= link_to item["url"], item["url"], target: "_blank" %></td>
+            <td><%= item["subject"] %></td>
+            <td><%= item["request_name"] %></td>
+            <td><%= item["email"] %></td>
+            <td><%= item["role"] %></td>
+            <td><%= item["ignored_at"] %></td>
+            <td><%= item["completed_at"] %></td>
+            <td><%= item["snooze_until"] %></td>
+            <td><%= item["quote_group_id"] %></td>
+            <td><%= item["quoted_ware_id"] %></td>
+            <td><%= item["proposal_id"] %></td>
+            <td><%= item["purchase_order_id"] %></td>
+            <td><%= item["compliance_manifest_id"] %></td>
+            <td><%= item["multipage_form_id"] %></td>
+            <td><%= item["note_id"] %></td>
+            <td><%= item["docusign_signer_id"] %></td>
+            <td><%= item["target"] %></td>
+            <td><%= item["approval_id"] %></td>
+            <td><%= item["created_at"] %></td>
+            <td><%= item["performed_by"].map { |k, v| "#{k.capitalize}: #{v}" }.join(", ") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

@@ -1,6 +1,6 @@
 # config/routes.rb
 Rails.application.routes.draw do
-  root 'sessions#new'  # Assuming you have a home page or login page
+  root 'home#index'
 
   get '/signin', to: 'sessions#signin'
   get '/signout', to: 'sessions#signout'
@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get '/token', to: 'sessions#token'
   get '/wares', to: 'sessions#wares'
   get '/providers', to: 'sessions#providers'
-
+  
   # New routes for fetching data
   get '/fetch_user_profile', to: 'sessions#fetch_user_profile'
   get '/fetch_organizations_data', to: 'sessions#fetch_organizations_data'
