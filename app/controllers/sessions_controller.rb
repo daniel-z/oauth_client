@@ -1,5 +1,7 @@
+# app/controllers/sessions_controller.rb
 class SessionsController < ApplicationController
-  before_action :set_oauth_client, only: [:signin, :callback, :client_credentials, :user, :wares, :providers]
+  before_action :set_oauth_client, only: [:signin, :callback, :client_credentials, :user, :wares, :providers, :fetch_user_profile]
+  before_action :set_access_token, only: [:fetch_user_profile]
 
   def signin
     redirect_to @client.auth_code.authorize_url(redirect_uri: redirect_uri), allow_other_host: true
@@ -13,7 +15,6 @@ class SessionsController < ApplicationController
   def callback
     @oauth_data = @client.auth_code.get_token(params[:code], redirect_uri: redirect_uri)
     session[:access_token] = @oauth_data.token
-    render :callback  # Ensure it renders the callback.html.erb view
   end
 
   def client_credentials
@@ -26,17 +27,21 @@ class SessionsController < ApplicationController
     render plain: session[:access_token]
   end
 
-  def user
-    access_token = OAuth2::AccessToken.new(@client, session[:access_token])
-    render json: access_token.get("/oauth/user").body
-  end
-
   def wares
     render json: get_response('wares.json')
   end
 
   def providers
     render json: get_response('providers.json')
+  end
+
+  def fetch_user_profile
+    response = @access_token.get('/api/v2/users/profile.json')  # Update the endpoint as per the documentation
+    @user_profile = JSON.parse(response.body)['user']
+    respond_to do |format|
+      format.html { render 'show_user_profile' }
+      format.json { render json: @user_profile }
+    end
   end
 
   private
@@ -47,6 +52,10 @@ class SessionsController < ApplicationController
       ENV['CLIENT_SECRET'], 
       site: ENV['OAUTH_BASE_URL']
     )
+  end
+
+  def set_access_token
+    @access_token = OAuth2::AccessToken.new(@client, session[:access_token])
   end
 
   def redirect_uri

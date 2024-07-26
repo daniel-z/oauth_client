@@ -1,0 +1,15 @@
+<!-- app/views/sessions/show_action_items.html.erb -->
+<div class="container">
+  <h1>Action Items</h1>
+  <% if @action_items %>
+    <ul class="list-group">
+      <% @action_items.each do |item| %>
+        <li class="list-group-item"><strong>ID:</strong> <%= item['id'] %></li>
+        <li class="list-group-item"><strong>Description:</strong> <%= item['description'] %></li>
+        <!-- Add other fields as necessary -->
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No action items available.</p>
+  <% end %>
+</div>

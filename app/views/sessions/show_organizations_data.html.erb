@@ -1,0 +1,27 @@
+<div class="container">
+  <h1>Organizations Data</h1>
+  <% if @organizations_data %>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-smaller-text" style="width: 100%;">
+        <thead>
+          <tr>
+            <% @organizations_data.first.each_key do |key| %>
+              <th><%= key.humanize %></th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @organizations_data.each do |organization| %>
+            <tr>
+              <% organization.each_value do |value| %>
+                <td><%= value %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p>No organizations data available.</p>
+  <% end %>
+</div>
