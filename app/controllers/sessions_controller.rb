@@ -42,10 +42,10 @@ class SessionsController < ApplicationController
 
   def fetch_user_profile
     response = @access_token.get('/api/v2/users/profile.json')
-    @user_profile = JSON.parse(response.body)['user']
+    @user_profile_data = JSON.parse(response.body)['user']
     respond_to do |format|
       format.html { render 'show_user_profile' }
-      format.json { render json: @user_profile }
+      format.json { render json: @user_profile_data }
     end
   end
 
