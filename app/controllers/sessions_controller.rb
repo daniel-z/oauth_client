@@ -1,6 +1,6 @@
 # app/controllers/sessions_controller.rb
 class SessionsController < ApplicationController
-  before_action :set_oauth_client, only: [:signin, :callback, :client_credentials, :user, :wares, :providers, :fetch_user_profile, :fetch_organizations_data, :fetch_action_items]
+  before_action :set_oauth_client, only: [:signin, :callback, :user, :fetch_user_profile, :fetch_organizations_data, :fetch_action_items]
   before_action :set_access_token, only: [:fetch_user_profile, :fetch_organizations_data, :fetch_action_items]
 
   def signin
@@ -8,8 +8,8 @@ class SessionsController < ApplicationController
   end
 
   def signout
-    reset_session
     session[:token_info] = nil
+    reset_session
     redirect_to root_path
   end
 
@@ -24,23 +24,16 @@ class SessionsController < ApplicationController
     redirect_to root_path, notice: "Successfully authenticated with the server"
   end
 
-  def client_credentials
-    @oauth_data = @client.auth_code.get_token(params[:code], redirect_uri: redirect_uri)
-  end
-
   def token
     render plain: session[:access_token]
   end
 
-  def wares
-    render json: get_response('wares.json')
-  end
-
-  def providers
-    render json: get_response('providers.json')
-  end
-
   def fetch_user_profile
+    if session[:token_info].nil?
+      redirect_to root_path, alert: "You need to authenticate first"
+      return
+    end
+
     response = @access_token.get('/api/v2/users/profile.json')
     @user_profile_data = JSON.parse(response.body)['user']
     respond_to do |format|
@@ -50,6 +43,11 @@ class SessionsController < ApplicationController
   end
 
   def fetch_organizations_data
+    if session[:token_info].nil?
+      redirect_to root_path, alert: "You need to authenticate first"
+      return
+    end
+
     response = @access_token.get('/api/v2/organizations.json')
     @organizations_data = JSON.parse(response.body)
     respond_to do |format|
@@ -59,6 +57,11 @@ class SessionsController < ApplicationController
   end
 
   def fetch_action_items
+    if session[:token_info].nil?
+      redirect_to root_path, alert: "You need to authenticate first"
+      return
+    end
+
     response = @access_token.get('/api/v2/action_items.json')
     @action_items = JSON.parse(response.body)
     respond_to do |format|
@@ -78,15 +81,14 @@ class SessionsController < ApplicationController
   end
 
   def set_access_token
-    @access_token = OAuth2::AccessToken.new(@client, session[:access_token])
+    if session[:access_token].present?
+      @access_token = OAuth2::AccessToken.new(@client, session[:access_token])
+    else
+      @access_token = nil
+    end
   end
 
   def redirect_uri
     ENV['CALLBACK_URL']
-  end
-
-  def get_response(url)
-    access_token = OAuth2::AccessToken.new(@client, session[:access_token])
-    JSON.parse(access_token.get("/api/#{url}").body)
   end
 end

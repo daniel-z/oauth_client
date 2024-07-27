@@ -5,7 +5,7 @@
     <%= submit_tag 'Authenticate with OAuth', class: 'btn btn-primary' %>
   <% end %>
 
-  <% if session[:token_info]["token"].present? %>
+  <% if session[:token_info].present? %>
     <section class="mt-4">
       <h2>Token Information</h2>
       <ul class="list-group">
