@@ -1,24 +1,10 @@
 # README
+This is a fast sample to connect to RX using oauth
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Configuration
+After configuring your access in rx app:
+  - Clone sample.env as .env
+  - Fill the missing data on it
+  - Run it as rails s
+  - Open localhost:3000 and just follow the UI
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
